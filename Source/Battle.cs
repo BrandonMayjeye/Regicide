@@ -5,8 +5,8 @@ using System.Linq;
 
 public partial class Battle : Node2D
 {
-	public Vector2 CardSize = new Vector2(0.25f, 0.25f);
-	public Vector2 CardHighlightSize = new Vector2(0.35f, 0.35f);
+	public Vector2 CardSize = new Vector2(0.15f, 0.15f);
+	public Vector2 CardHighlightSize = new Vector2(0.2f, 0.20f);
 	public event EventHandler<MouseButtonEventArgs> OnLeftClick;
 
 	public override void _Input(InputEvent iEvent)
@@ -18,6 +18,40 @@ public partial class Battle : Node2D
 			{
 				this._leftClick(mouseButtonEvent.Pressed);
 			}
+		}
+	}
+	public List<Player> Players = new List<Player>();
+	public void RegisterPlayer(Player player)
+	{
+		this.Players.Add(player);
+		this.currentPlayersTurn = this.Players.First();
+	}
+	private Player currentPlayersTurn;
+
+	public Player GetCurrentPlayer => this.currentPlayersTurn;
+
+	public void EndTurn(Player player)
+	{
+		if (player == currentPlayersTurn)
+		{
+			var indexOfPlayer = this.Players.IndexOf(currentPlayersTurn);
+			if (this.Players.Count > indexOfPlayer + 1)
+			{
+				this.currentPlayersTurn = this.Players[indexOfPlayer + 1];
+			}
+			else
+			{
+				this.NextRound();
+				this.currentPlayersTurn = this.Players.First();
+			}
+		}
+	}
+
+	private void NextRound()
+	{
+		foreach (var player in this.Players)
+		{
+			player.NextRound();
 		}
 	}
 
@@ -53,12 +87,10 @@ public partial class Battle : Node2D
 				}
 			}
 		}
-		return raycastResults.OrderBy(g => g.ZIndex);
+		return raycastResults.OrderByDescending(g => g.ZIndex);
 	}
 
-	public Player Player;
 	// Called when the node enters the scene tree for the first time.
-	public void RegisterPlayer(Player player) => this.Player = player;
 	public override void _Ready()
 	{
 		GD.Print("Battle Ready");
