@@ -1,86 +1,27 @@
 [gd_scene load_steps=6 format=3 uid="uid://v1vmampcxkd"]
 
-[ext_resource type="Texture2D" uid="uid://qqp5sqjtoqmg" path="res://Assets/Textures/Cards/Card_Border.png" id="1_mvfdx"]
-[ext_resource type="Texture2D" uid="uid://fxo5b7vjyalh" path="res://Assets/Textures/Cards/Card_Foreground.png" id="1_yjnkv"]
-[ext_resource type="Texture2D" uid="uid://rnt1p7e66gt" path="res://Assets/Textures/Cards/Card_Images/Placeholder.png" id="3_8i2ee"]
-[ext_resource type="Texture2D" uid="uid://dsqex11adh6u4" path="res://Assets/Textures/Cards/Card_Seperators.png" id="3_pnd5l"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eh2w7"]
-size = Vector2(500, 700)
+[ext_resource type="PackedScene" uid="uid://brf5iui4gnuxu" path="res://Prefabs/card.tscn" id="1_2qw1t"]
+[ext_resource type="Script" path="res://Source/Battle.cs" id="1_afi1b"]
+[ext_resource type="Script" path="res://Source/Player.cs" id="2_6mp8m"]
+[ext_resource type="Script" path="res://Source/BattleField.cs" id="3_kmiu2"]
+[ext_resource type="Script" path="res://Source/Card.cs" id="5_6s0tb"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Card" type="Node2D" parent="."]
-position = Vector2(320, 316)
-scale = Vector2(0.25, 0.25)
+[node name="Battle" type="Node2D" parent="."]
+script = ExtResource("1_afi1b")
 
-[node name="Card_Front2" type="Node2D" parent="Card"]
+[node name="Player" type="Node2D" parent="Battle"]
+script = ExtResource("2_6mp8m")
 
-[node name="Foreground" type="Sprite2D" parent="Card/Card_Front2"]
-texture = ExtResource("1_yjnkv")
+[node name="BattleField" type="Node2D" parent="Battle/Player"]
+script = ExtResource("3_kmiu2")
 
-[node name="Border" type="Sprite2D" parent="Card/Card_Front2"]
-position = Vector2(0, -1)
-texture = ExtResource("1_mvfdx")
+[node name="Card" parent="Battle/Player/BattleField" instance=ExtResource("1_2qw1t")]
+position = Vector2(227, 329)
+script = ExtResource("5_6s0tb")
 
-[node name="Border3" type="Sprite2D" parent="Card/Card_Front2"]
-position = Vector2(6.10352e-05, -98)
-scale = Vector2(0.992, 1.5)
-texture = ExtResource("3_8i2ee")
+[node name="Enemy" type="Node2D" parent="Battle"]
 
-[node name="Border2" type="Sprite2D" parent="Card/Card_Front2"]
-position = Vector2(0, -2)
-texture = ExtResource("3_pnd5l")
-
-[node name="Label" type="Label" parent="Card/Card_Front2"]
-offset_left = -244.0
-offset_top = -344.0
-offset_right = 244.0
-offset_bottom = -248.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 66
-text = "Card Name"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="Card/Card_Front2"]
-offset_left = -244.0
-offset_top = 52.0
-offset_right = 244.0
-offset_bottom = 244.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 16
-text = "Where does it come from?
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots "
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="Label3" type="Label" parent="Card/Card_Front2"]
-offset_left = -244.0
-offset_top = 248.0
-offset_right = -28.0
-offset_bottom = 349.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 61
-text = "10"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="Label4" type="Label" parent="Card/Card_Front2"]
-offset_left = -16.0
-offset_top = 248.0
-offset_right = 244.0
-offset_bottom = 344.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 71
-text = "10"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="Area2D" type="Area2D" parent="Card"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Card/Area2D"]
-shape = SubResource("RectangleShape2D_eh2w7")
+[node name="BattleField" type="Node2D" parent="Battle/Enemy"]
+script = ExtResource("3_kmiu2")
