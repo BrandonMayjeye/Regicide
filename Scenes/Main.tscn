@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://v1vmampcxkd"]
+[gd_scene load_steps=5 format=3 uid="uid://v1vmampcxkd"]
 
 [ext_resource type="PackedScene" uid="uid://brf5iui4gnuxu" path="res://Prefabs/card.tscn" id="1_2qw1t"]
 [ext_resource type="Script" path="res://Source/Battle.cs" id="1_afi1b"]
 [ext_resource type="Script" path="res://Source/Player.cs" id="2_6mp8m"]
 [ext_resource type="Script" path="res://Source/BattleField.cs" id="3_kmiu2"]
-[ext_resource type="Script" path="res://Source/Card.cs" id="5_6s0tb"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -19,9 +18,3 @@ script = ExtResource("3_kmiu2")
 
 [node name="Card" parent="Battle/Player/BattleField" instance=ExtResource("1_2qw1t")]
 position = Vector2(227, 329)
-script = ExtResource("5_6s0tb")
-
-[node name="Enemy" type="Node2D" parent="Battle"]
-
-[node name="BattleField" type="Node2D" parent="Battle/Enemy"]
-script = ExtResource("3_kmiu2")
