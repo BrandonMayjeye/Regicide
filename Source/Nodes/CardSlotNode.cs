@@ -1,29 +1,29 @@
 using Godot;
 using System;
 
-public partial class CardSlot : Node2D
+public partial class CardSlotNode : Node2D
 {
 	[Export]
 	public bool IsDelayedSlot = false;
 	[Export]
 	public int BattleSlotIndex;
 	[Export]
-	public CardSlot DelayedToSlot;
-	public BattleField BattleField { get; private set; }
-	public Player Player { get; private set; }
-	public Battle Battle { get; private set; }
+	public CardSlotNode DelayedToSlot;
+	public BattleFieldNode BattleField { get; private set; }
+	public PlayerNode Player { get; private set; }
+	public BattleNode Battle { get; private set; }
 	public event EventHandler OnCardMouseEntered;
 	public event EventHandler OnCardMouseExited;
-	private Card _card;
-	public Card GetCard() => _card;
+	private CardNode _card;
+	public CardNode GetCard() => _card;
 
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.BattleField = this.GetParent() as BattleField;
-		this.Player = this.BattleField.GetParent() as Player;
-		this.Battle = this.Player.GetParent() as Battle;
+		this.BattleField = this.GetParent() as BattleFieldNode;
+		this.Player = this.BattleField.GetParent() as PlayerNode;
+		this.Battle = this.Player.GetParent() as BattleNode;
 		this.BattleField.RegisterCardSlot(this);
 	}
 
@@ -32,7 +32,7 @@ public partial class CardSlot : Node2D
 	{
 	}
 
-	internal void SetCard(Card draggedCard)
+	internal void SetCard(CardNode draggedCard)
 	{
 		this._card = draggedCard;
 		this._card.Position = this.Position;

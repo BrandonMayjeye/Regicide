@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class Battle : Node2D
+public partial class BattleNode : Node2D
 {
 	public Vector2 CardSize = new Vector2(0.15f, 0.15f);
 	public Vector2 CardHighlightSize = new Vector2(0.2f, 0.20f);
@@ -20,17 +20,17 @@ public partial class Battle : Node2D
 			}
 		}
 	}
-	public List<Player> Players = new List<Player>();
-	public void RegisterPlayer(Player player)
+	public List<PlayerNode> Players = new List<PlayerNode>();
+	public void RegisterPlayer(PlayerNode player)
 	{
 		this.Players.Add(player);
 		this.currentPlayersTurn = this.Players.First();
 	}
-	private Player currentPlayersTurn;
+	private PlayerNode currentPlayersTurn;
 
-	public Player GetCurrentPlayer => this.currentPlayersTurn;
+	public PlayerNode GetCurrentPlayer => this.currentPlayersTurn;
 
-	public void EndTurn(Player player)
+	public void EndTurn(PlayerNode player)
 	{
 		if (player == currentPlayersTurn)
 		{

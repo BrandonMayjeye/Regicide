@@ -1,18 +1,18 @@
 using Godot;
 using System;
 
-public partial class Player : Node2D
+public partial class PlayerNode : Node2D
 {
 	[Export]
 	public bool IsMyPlayer = false;
-	public Battle Battle { get; private set; }
-	public BattleField BattleField { get; private set; }
-	public void RegisterBattleField(BattleField battleField) => this.BattleField = battleField;
+	public BattleNode Battle { get; private set; }
+	public BattleFieldNode BattleField { get; private set; }
+	public void RegisterBattleField(BattleFieldNode battleField) => this.BattleField = battleField;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.Battle = this.GetParent() as Battle;// set  up dependencies
+		this.Battle = this.GetParent() as BattleNode;// set  up dependencies
 		this.Battle.RegisterPlayer(this);
 	}
 

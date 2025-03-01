@@ -3,22 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class BattleField : Node2D
+public partial class BattleFieldNode : Node2D
 {
-	public Player Player { get; private set; }
-	public Battle Battle { get; private set; }
+	public PlayerNode Player { get; private set; }
+	public BattleNode Battle { get; private set; }
 
-	private List<Card> _cardsInHand = new List<Card>();
-	private List<CardSlot> _cardSlots = new List<CardSlot>();
-	private List<Card> _highlightedCards = new List<Card>();
+	private List<CardNode> _cardsInHand = new List<CardNode>();
+	private List<CardSlotNode> _cardSlots = new List<CardSlotNode>();
+	private List<CardNode> _highlightedCards = new List<CardNode>();
 	// Called when the node enters the scene tree for the first time.
-	private Card _draggedCard;
+	private CardNode _draggedCard;
 	private Vector2 _draggedCardOriginalPosition;
 
 	public override void _Ready()
 	{
-		this.Player = this.GetParent() as Player;
-		this.Battle = this.Player.GetParent() as Battle;
+		this.Player = this.GetParent() as PlayerNode;
+		this.Battle = this.Player.GetParent() as BattleNode;
 		this.Player.RegisterBattleField(this);
 		this.Battle.OnLeftClick += _onLeftClick;
 	}
@@ -28,7 +28,7 @@ public partial class BattleField : Node2D
 		if (!this.Player.IsMyPlayer || this.Battle.GetCurrentPlayer != Player)
 			return;
 		GD.Print(e.IsMouseDown);
-		var cards = this.Battle.RaycastFor<Card>(1);
+		var cards = this.Battle.RaycastFor<CardNode>(1);
 		var topCard = cards.FirstOrDefault();
 		if (e.IsMouseDown && topCard != null && _highlightedCards.Contains(topCard) && _draggedCard == null)
 		{
@@ -37,7 +37,7 @@ public partial class BattleField : Node2D
 		}
 		else if (!e.IsMouseDown)
 		{
-			var cardSlots = this.Battle.RaycastFor<CardSlot>(1);
+			var cardSlots = this.Battle.RaycastFor<CardSlotNode>(1);
 			var topCardSlot = cardSlots.FirstOrDefault();
 			if (topCardSlot != null && topCardSlot.GetCard() == null && this._cardSlots.Contains(topCardSlot) && topCardSlot.IsDelayedSlot)
 			{
@@ -59,7 +59,7 @@ public partial class BattleField : Node2D
 	}
 	private int inHandNextZIndex => this._cardsInHand.Max(g => g.ZIndex) + 1;
 
-	public void RegisterCardInHand(Card card)
+	public void RegisterCardInHand(CardNode card)
 	{
 		this._cardsInHand.Add(card);
 
@@ -76,7 +76,7 @@ public partial class BattleField : Node2D
 		if (!this.Player.IsMyPlayer || this.Battle.GetCurrentPlayer != Player)
 			return;
 
-		var card = sender as Card;
+		var card = sender as CardNode;
 		this._highlightedCards.Add(card);
 	}
 
@@ -85,10 +85,10 @@ public partial class BattleField : Node2D
 		if (!this.Player.IsMyPlayer || this.Battle.GetCurrentPlayer != Player)
 			return;
 
-		var card = sender as Card;
+		var card = sender as CardNode;
 		this._highlightedCards.Remove(card);
 	}
-	private Card topCard;
+	private CardNode topCard;
 	private int topCardZIndex;
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -136,7 +136,7 @@ public partial class BattleField : Node2D
 		}
 	}
 
-	internal void RegisterCardSlot(CardSlot cardSlot)
+	internal void RegisterCardSlot(CardSlotNode cardSlot)
 	{
 		this._cardSlots.Add(cardSlot);
 	}
