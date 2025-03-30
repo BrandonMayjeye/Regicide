@@ -1,143 +1,34 @@
-[gd_scene load_steps=7 format=3 uid="uid://v1vmampcxkd"]
+[gd_scene load_steps=8 format=3 uid="uid://v1vmampcxkd"]
 
 [ext_resource type="PackedScene" uid="uid://brf5iui4gnuxu" path="res://Prefabs/card.tscn" id="1_2qw1t"]
-[ext_resource type="Script" path="res://Source/Nodes/BattleNode.cs" id="1_afi1b"]
-[ext_resource type="Script" path="res://Source/Nodes/GameNode.cs" id="1_auisu"]
-[ext_resource type="Script" path="res://Source/Nodes/PlayerNode.cs" id="2_6mp8m"]
-[ext_resource type="Script" path="res://Source/Nodes/BattleFieldNode.cs" id="3_kmiu2"]
+[ext_resource type="Script" path="res://Source/Nodes/GameNode.cs" id="1_vsg5f"]
+[ext_resource type="Script" path="res://Source/Nodes/BattleNode.cs" id="2_msjbq"]
 [ext_resource type="PackedScene" uid="uid://0mtqgknkmsdi" path="res://Prefabs/card_slot.tscn" id="4_1x10p"]
+[ext_resource type="Script" path="res://Source/Nodes/CardSlotNode.cs" id="4_35yyj"]
+[ext_resource type="Script" path="res://Source/Nodes/PlayerNode.cs" id="4_t1o4c"]
+[ext_resource type="Script" path="res://Source/Nodes/CardNode.cs" id="6_tv8cg"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Game" type="Node2D" parent="."]
-script = ExtResource("1_auisu")
+script = ExtResource("1_vsg5f")
 
 [node name="Battle" type="Node2D" parent="Game"]
-script = ExtResource("1_afi1b")
+script = ExtResource("2_msjbq")
 
-[node name="Player" type="Node2D" parent="Game/Battle"]
-script = ExtResource("2_6mp8m")
-IsMyPlayer = true
+[node name="CardSlots" type="Node2D" parent="Game/Battle"]
 
-[node name="BattleField" type="Node2D" parent="Game/Battle/Player"]
-script = ExtResource("3_kmiu2")
+[node name="PlayerCardSlots" type="Node2D" parent="Game/Battle/CardSlots"]
 
-[node name="CardSlot" parent="Game/Battle/Player/BattleField" instance=ExtResource("4_1x10p")]
+[node name="CardSlot" parent="Game/Battle/CardSlots/PlayerCardSlots" instance=ExtResource("4_1x10p")]
 position = Vector2(81, 447)
 scale = Vector2(0.15, 0.15)
+script = ExtResource("4_35yyj")
 
-[node name="CardSlot2" parent="Game/Battle/Player/BattleField" instance=ExtResource("4_1x10p")]
-position = Vector2(182, 446)
-scale = Vector2(0.15, 0.15)
-BattleSlotIndex = 1
+[node name="Player" type="Node2D" parent="Game/Battle"]
+script = ExtResource("4_t1o4c")
 
-[node name="CardSlot3" parent="Game/Battle/Player/BattleField" instance=ExtResource("4_1x10p")]
-position = Vector2(286, 446)
-scale = Vector2(0.15, 0.15)
-BattleSlotIndex = 2
-
-[node name="CardSlot4" parent="Game/Battle/Player/BattleField" node_paths=PackedStringArray("DelayedToSlot") instance=ExtResource("4_1x10p")]
-position = Vector2(81, 566)
-scale = Vector2(0.15, 0.15)
-IsDelayedSlot = true
-DelayedToSlot = NodePath("../CardSlot")
-
-[node name="CardSlot5" parent="Game/Battle/Player/BattleField" node_paths=PackedStringArray("DelayedToSlot") instance=ExtResource("4_1x10p")]
-position = Vector2(182, 565)
-scale = Vector2(0.15, 0.15)
-IsDelayedSlot = true
-DelayedToSlot = NodePath("../CardSlot2")
-
-[node name="CardSlot6" parent="Game/Battle/Player/BattleField" node_paths=PackedStringArray("DelayedToSlot") instance=ExtResource("4_1x10p")]
-position = Vector2(286, 565)
-scale = Vector2(0.15, 0.15)
-IsDelayedSlot = true
-DelayedToSlot = NodePath("../CardSlot3")
-
-[node name="Card" parent="Game/Battle/Player/BattleField" instance=ExtResource("1_2qw1t")]
+[node name="Card" parent="Game/Battle/Player" instance=ExtResource("1_2qw1t")]
 position = Vector2(473, 554)
 scale = Vector2(0.15, 0.15)
-
-[node name="Card2" parent="Game/Battle/Player/BattleField" instance=ExtResource("1_2qw1t")]
-position = Vector2(622, 556)
-scale = Vector2(0.15, 0.15)
-
-[node name="Card3" parent="Game/Battle/Player/BattleField" instance=ExtResource("1_2qw1t")]
-position = Vector2(765, 551)
-scale = Vector2(0.15, 0.15)
-
-[node name="Card4" parent="Game/Battle/Player/BattleField" instance=ExtResource("1_2qw1t")]
-position = Vector2(905, 551)
-scale = Vector2(0.15, 0.15)
-
-[node name="Button" type="Button" parent="Game/Battle"]
-offset_left = 355.0
-offset_top = 577.0
-offset_right = 433.0
-offset_bottom = 608.0
-text = "End Turn"
-
-[node name="Player2" type="Node2D" parent="Game/Battle"]
-script = ExtResource("2_6mp8m")
-IsMyPlayer = true
-
-[node name="BattleField" type="Node2D" parent="Game/Battle/Player2"]
-script = ExtResource("3_kmiu2")
-
-[node name="CardSlot" parent="Game/Battle/Player2/BattleField" instance=ExtResource("4_1x10p")]
-position = Vector2(83, 235)
-scale = Vector2(0.15, 0.15)
-
-[node name="CardSlot2" parent="Game/Battle/Player2/BattleField" instance=ExtResource("4_1x10p")]
-position = Vector2(184, 234)
-scale = Vector2(0.15, 0.15)
-BattleSlotIndex = 1
-
-[node name="CardSlot3" parent="Game/Battle/Player2/BattleField" instance=ExtResource("4_1x10p")]
-position = Vector2(288, 234)
-scale = Vector2(0.15, 0.15)
-BattleSlotIndex = 2
-
-[node name="CardSlot4" parent="Game/Battle/Player2/BattleField" node_paths=PackedStringArray("DelayedToSlot") instance=ExtResource("4_1x10p")]
-position = Vector2(83, 114)
-scale = Vector2(0.15, 0.15)
-IsDelayedSlot = true
-DelayedToSlot = NodePath("../CardSlot")
-
-[node name="CardSlot5" parent="Game/Battle/Player2/BattleField" node_paths=PackedStringArray("DelayedToSlot") instance=ExtResource("4_1x10p")]
-position = Vector2(184, 113)
-scale = Vector2(0.15, 0.15)
-IsDelayedSlot = true
-DelayedToSlot = NodePath("../CardSlot2")
-
-[node name="CardSlot6" parent="Game/Battle/Player2/BattleField" node_paths=PackedStringArray("DelayedToSlot") instance=ExtResource("4_1x10p")]
-position = Vector2(288, 113)
-scale = Vector2(0.15, 0.15)
-IsDelayedSlot = true
-DelayedToSlot = NodePath("../CardSlot3")
-
-[node name="Card" parent="Game/Battle/Player2/BattleField" instance=ExtResource("1_2qw1t")]
-position = Vector2(464, 128)
-scale = Vector2(0.15, 0.15)
-
-[node name="Card2" parent="Game/Battle/Player2/BattleField" instance=ExtResource("1_2qw1t")]
-position = Vector2(613, 130)
-scale = Vector2(0.15, 0.15)
-
-[node name="Card3" parent="Game/Battle/Player2/BattleField" instance=ExtResource("1_2qw1t")]
-position = Vector2(756, 125)
-scale = Vector2(0.15, 0.15)
-
-[node name="Card4" parent="Game/Battle/Player2/BattleField" instance=ExtResource("1_2qw1t")]
-position = Vector2(896, 125)
-scale = Vector2(0.15, 0.15)
-
-[node name="Button2" type="Button" parent="Game/Battle"]
-offset_left = 180.0
-offset_top = 16.0
-offset_right = 258.0
-offset_bottom = 47.0
-text = "End Turn"
-
-[connection signal="pressed" from="Game/Battle/Button" to="Game/Battle/Player" method="onEndTurnButtonPressed"]
-[connection signal="pressed" from="Game/Battle/Button2" to="Game/Battle/Player2" method="onEndTurnButtonPressed"]
+script = ExtResource("6_tv8cg")
